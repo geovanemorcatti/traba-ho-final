@@ -38,10 +38,11 @@ for nome_base, (X, y) in datasets.items():
             X, y, test_size=0.40, random_state=seed_rodada, stratify=y
         )
         # Quebrando o resto em 20% Validação e 20% Teste final
+        # O erro está no stratify=y
+        # Correção: Agora usamos y_temp, que tem o mesmo tamanho de X_temp (60 amostras)
         X_val, X_test, y_val, y_test = train_test_split(
-            X_temp, y_temp, test_size=0.50, random_state=seed_rodada, stratify=y
+             X_temp, y_temp, test_size=0.50, random_state=seed_rodada, stratify=y_temp
         )
-        
         # Normalização essencial para RNAs
         scaler = StandardScaler()
         X_train_scaled = scaler.fit_transform(X_train)
