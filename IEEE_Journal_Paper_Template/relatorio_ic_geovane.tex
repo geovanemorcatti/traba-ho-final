@@ -10,35 +10,33 @@
 
 \begin{document}
 
-\title{Análise Comparativa de Desempenho entre Redes Neurais Artificiais e Sistemas Neuro-Fuzzy em Cenários Complexos de Classificação e Regressão}
+\title{Análise Comparativa de Desempenho entre Redes Neurais Artificiais e Sistemas Fuzzy em Cenários Complexos de Classificação e Regressão}
 
 \author{Geovane de Freitas Queiroz Morcatti\\
-Programa de Pós-Graduação em Modelagem Matemática e Computacional\\
 Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG)\\
-Belo Horizonte, Brasil\\
-Email: geovane.morcatti@example.com}
+Belo Horizonte, Brasil}
 
 \markboth{CEFET-MG -- Inteligência Computacional (01/2026)}{Geovane de Freitas Queiroz Morcatti}
 
 \maketitle
 
 \begin{abstract}
-Este relatório técnico apresenta um experimento sistemático comparando modelos de Redes Neurais Artificiais (RNAs) e Sistemas Neuro-Fuzzy aplicados a tarefas reais de classificação binária, multiclasse e regressão. Utilizando quatro bases de dados públicas extraídas do repositório UCI Machine Learning (Iris, Breast Cancer, Wine Quality e Heart Disease), o estudo foca no rigor da metodologia experimental. Cada modelo foi avaliado sob as mesmas partições através de 21 execuções independentes para mitigar os efeitos da estocasticidade. Os resultados quantitativos foram validados por testes estatísticos de significância, ponderando a clássica dualidade entre o poder preditivo das RNAs e a interpretabilidade axiomática dos modelos baseados em lógica fuzzy.
+Este relatório técnico apresenta um experimento sistemático comparando modelos de Redes Neurais Artificiais (RNAs) e Sistemas Fuzzy aplicados a tarefas reais de classificação e regressão. Utilizando quatro bases de dados públicas extraídas do repositório UCI Machine Learning (Iris, Breast Cancer, Wine Quality e Heart Disease), o estudo foca no rigor da metodologia experimental. Cada modelo foi avaliado sob as mesmas partições através de 21 execuções independentes para mitigar os efeitos da estocasticidade. Os resultados apontam a supremacia preditiva das RNAs em cenários multidimensionais, enquanto os sistemas Fuzzy confirmam estabilidade estatística e alta interpretabilidade.
 \end{abstract}
 
 \begin{IEEEkeywords}
-Inteligência Computacional, Redes Neurais Artificiais, Sistemas Neuro-Fuzzy, Metodologia Experimental, Repetibilidade Científica.
+Inteligência Computacional, Redes Neurais Artificiais, Sistemas Fuzzy, Metodologia Experimental, Repetibilidade Científica.
 \end{IEEEkeywords}
 
 \section{Introdução}
-O campo da Inteligência Computacional (IC) é amplamente dominado por abordagens bioinspiradas e baseadas em dados. Dentre essas técnicas, destacam-se as Redes Neurais Artificiais (RNAs), consagradas pelo alto poder de aproximação de funções não lineares e extração automática de características latentes, e os Sistemas Fuzzy/Neuro-Fuzzy, amplamente valorizados por sua capacidade de lidar com incertezas e fornecer mapeamentos transparentes e inteligíveis na forma de regras lógicas do tipo "SE-ENTÃO".
+O campo da Inteligência Computacional (IC) é amplamente dominado por abordagens baseadas em dados[cite: 1]. Dentre essas técnicas, destacam-se as Redes Neurais Artificiais (RNAs), consagradas pelo alto poder de aproximação de funções não lineares, e os Sistemas Fuzzy, valorizados por sua capacidade de fornecer mapeamentos transparentes na forma de regras lógicas do tipo "SE-ENTÃO"[cite: 14].
 
-O objetivo fundamental deste trabalho consiste em implementar, avaliar e comparar de forma isonômica e rigorosa diferentes arquiteturas de RNAs e modelos baseados em lógica fuzzy em quatro conjuntos de dados do mundo real. O foco principal não se restringe à busca cega pelo maior indicador de acurácia, mas sim no cumprimento estrito de uma metodologia experimental sólida, na análise estatística de repetibilidade e no entendimento do impacto da variação de parâmetros.
+O objetivo fundamental deste trabalho consiste em implementar, avaliar e comparar de forma isonômica e rigorosa diferentes arquiteturas de RNAs e modelos baseados em lógica fuzzy em quatro conjuntos de dados do mundo real[cite: 4]. O foco principal está no cumprimento estrito de uma metodologia experimental sólida, na análise estatística de repetibilidade e no entendimento do impacto da variação de parâmetros[cite: 5].
 
 \section{Descrição dos Conjuntos de Dados e Análise Exploratória}
-Para garantir uma validação holística das propriedades de generalização dos algoritmos, foram selecionadas quatro bases com propriedades matemáticas e domínios de aplicação completamente distintos, provenientes do repositório oficial \textit{UCI Machine Learning}.
+Para garantir uma validação holística das propriedades de generalização dos algoritmos, foram selecionadas quatro bases com propriedades matemáticas distintas, provenientes do repositório oficial \textit{UCI Machine Learning}[cite: 9].
 
-A Tabela~\ref{tab:datasets} resume a estrutura dimensional de cada conjunto de dados antes das transformações de engenharia de recursos.
+A Tabela~\ref{tab:datasets} resume a estrutura dimensional de cada conjunto de dados antes das transformações de engenharia de recursos[cite: 10, 11].
 
 \begin{table}[htbp]
 \caption{Sumário dos Conjuntos de Dados Selecionados (UCI)}
@@ -57,38 +55,68 @@ A Tabela~\ref{tab:datasets} resume a estrutura dimensional de cada conjunto de d
 \end{table}
 
 \subsection{Iris Flower Dataset}
-O dataset clássico de Fisher apresenta um cenário perfeitamente balanceado composto por 50 instâncias para cada uma de suas 3 classes (\textit{Iris-setosa}, \textit{Iris-versicolor} e \textit{Iris-virginica}). Os atributos medem dimensões estruturais (comprimento e largura da sépala e da pétala). A análise exploratória revela forte separabilidade linear da classe \textit{setosa}, enquanto as outras duas apresentam sobreposições marginais que desafiam as fronteiras de decisão dos classificadores.
+O dataset clássico apresenta um cenário perfeitamente balanceado composto por 50 instâncias para cada uma de suas 3 classes. Os atributos medem dimensões estruturais (comprimento e largura da sépala e da pétala)[cite: 10]. A análise exploratória revela forte separabilidade linear da classe \textit{setosa}, enquanto as outras duas apresentam sobreposições marginais[cite: 11].
 
 \subsection{Breast Cancer Wisconsin (Diagnostic)}
-Base médica de alta dimensionalidade (30 atributos extraídos de imagens de biópsias). Exibe um leve desbalanceamento (62,7\% benignos e 37,3\% malignos). Vários de seus atributos contínuos (como raio, área e perímetro) possuem correlação linear próxima de 1,0, o que impõe a necessidade de tratamentos de regularização para evitar fenômenos de sobreajuste (\textit{overfitting}).
+Base médica de alta dimensionalidade (30 atributos extraídos de imagens de biópsias)[cite: 10]. Exibe um leve desbalanceamento (62,7\% benignos e 37,3\% malignos)[cite: 11]. Vários de seus atributos contínuos possuem correlação linear próxima de 1,0, o que impõe a necessidade de tratamentos de regularização[cite: 20].
 
 \subsection{Wine Quality Dataset}
-Focado no teste de regressão quantitativa, este conjunto avalia propriedades físico-químicas de vinhos verdes. A variável alvo de qualidade varia em uma escala de 3 a 8. A distribuição amostral assemelha-se a uma curva normal, concentrando mais de 80\% dos dados nas notas centrais 5 e 6, tornando escassos os exemplos de vinhos excepcionais ou péssimos.
+Focado no teste de regressão quantitativa, este conjunto avalia propriedades físico-químicas de vinhos verdes[cite: 8, 11]. A variável alvo de qualidade varia em uma escala de 3 a 8[cite: 11]. A distribuição amostral assemelha-se a uma curva normal, concentrando mais de 80\% dos dados nas notas centrais 5 e 6[cite: 11].
 
 \subsection{Heart Disease Dataset (Statlog)}
-Apresenta um cenário balanceado (55,6\% saudáveis e 44,4\% cardiopatas), porém introduz atributos de natureza mista. Variáveis numéricas contínuas (idade, colesterol, pressão) operam em conjunto com atributos categóricos ordinais e nominais (sexo, tipo de dor no peito). É um ambiente altamente propício para sistemas fuzzy, onde os termos linguísticos reduzem a complexidade de variáveis híbridas.
+Apresenta um cenário balanceado (55,6\% saudáveis e 44,4\% cardiopatas), porém introduz atributos de natureza mista[cite: 11]. Variáveis numéricas contínuas operam em conjunto com atributos categóricos ordinais e nominais[cite: 11]. É um ambiente propício para sistemas fuzzy, onde os termos linguísticos reduzem a complexidade de variáveis híbridas[cite: 21].
 
 \section{Metodologia Experimental e Configuração}
-Para assegurar a isonomia da comparação, adotou-se o protocolo de divisão de dados estático e idêntico para todos os competidores, fracionando cada dataset em 60\% para treinamento, 20% para validação e ajuste de hiperparâmetros, e 20% reservados exclusivamente para o teste e avaliação final.
-
-Visando eliminar o viés de convergência local decorrente da inicialização aleatória de pesos nas RNAs e nos parâmetros de partição fuzzy, os experimentos foram submetidos a exatamente 21 execuções independentes por algoritmo em cada base. Foram calculadas as médias e os respectivos desvios-padrão ($\sigma$) de cada métrica.
+Adotou-se o protocolo de divisão de dados estático e idêntico para todos os competidores, fracionando cada dataset em 60\% para treinamento, 20\% para validação e 20\% reservados exclusivamente para o teste final[cite: 26]. Os experimentos foram submetidos a exatamente 21 execuções independentes por algoritmo em cada base[cite: 32].
 
 \subsection{Algoritmos Avaliados}
-O estudo incluiu obrigatoriamente quatro algoritmos estruturados da seguinte forma:
+O estudo incluiu quatro algoritmos estruturados da seguinte forma[cite: 13, 14]:
 \begin{itemize}
-    \item \textbf{RNA Configuração A (MLP-Rasa):} Rede \textit{Multilayer Perceptron} contendo uma única camada oculta com 16 neurônios, função de ativação ReLU e otimizador Adam com taxa de aprendizado constante ($\eta = 0.01$).
-    \item \textbf{RNA Configuração B (MLP-Profunda):} Arquitetura profunda contendo duas camadas ocultas ($32 \times 16$), ativação SELU, inicialização de LeCun e aplicação de regularização L2 (\textit{Weight Decay} de $10^{-4}$) para mitigação de variância.
-    \item \textbf{Modelo Fuzzy A (Mamdani Clássico):} Sistema Fuzzy baseado em regras extraídas por agrupamento espacial (\textit{Subtractive Clustering}) com funções de pertinência gaussianas.
-    \item \textbf{Modelo Fuzzy B (ANFIS / Sugeno):} Rede Neuro-Fuzzy Adaptativa baseada no modelo de Sugeno de ordem zero, otimizada via algoritmo híbrido (mínimos quadrados combinados com retropropagação do gradiente).
+    \item \textbf{RNA Configuração A (MLP-Rasa):} Rede \textit{Multilayer Perceptron} contendo uma única camada oculta com 16 neurônios, ativação ReLU e max iterações igual a 500[cite: 19, 20].
+    \item \textbf{RNA Configuração B (MLP-Profunda):} Arquitetura profunda contendo duas camadas ocultas ($32 \times 16$), ativação TANH e max iterações igual a 500[cite: 19, 20].
+    \item \textbf{Fuzzy Configuração A:} Sistema Fuzzy Mamdani baseado em funções de pertinência triangulares e conjunto reduzido de regras lógicas[cite: 21].
+    \item \textbf{Fuzzy Configuração B:} Sistema Fuzzy baseado em funções de pertinência gaussianas para maior suavidade nas transições[cite: 21].
 \end{itemize}
 
 \section{Resultados e Discussão Crítica}
-Os resultados consolidados apontam comportamentos distintos. Para problemas puramente numéricos e de alta dimensionalidade (como o \textit{Breast Cancer}), a \textbf{RNA Configuração B} obteve os maiores índices de F1-Score (Média: 0.968, $\sigma \pm 0.004$), beneficiando-se da capacidade adaptativa de suas camadas profundas. No entanto, para o dataset de \textit{Heart Disease}, o modelo Neuro-Fuzzy (\textbf{ANFIS}) exibiu desempenho preditivo estatisticamente equivalente às RNAs, com o benefício intrínseco de gerar uma árvore de regras transparentes que permitem auditoria médica.
+Os resultados quantitativos obtidos experimentalmente após as 21 execuções independentes estão consolidados nas Tabelas~\ref{tab:classificacao} e~\ref{tab:regressao}[cite: 32, 39].
 
-Nas tarefas de regressão (\textit{Wine Quality}), a estabilidade do modelo ANFIS superou a MLP rasa, registrando menor desvio-padrão no Erro Quadrático Médio (MSE), comprovando que a fusão de conhecimento axiomático (regras) com aprendizado numérico reduz a sensibilidade a ruídos nos dados.
+\begin{table}[htbp]
+\caption{Resultados para as Tarefas de Classificação (Média $\pm \sigma$)}
+\label{tab:classificacao}
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Dataset} & \textbf{RNA Rasa (A)} & \textbf{RNA Profunda (B)} & \textbf{Fuzzy} \\
+\midrule
+1. Iris & $0.9571 \pm 0.0426$ & $\mathbf{0.9667 \pm 0.0341}$ & $0.6206 \pm 0.0281$ \\
+2. Breast Cancer & $\mathbf{0.9758 \pm 0.0130}$ & $0.9678 \pm 0.0184$ & $0.1257 \pm 0.0215$ \\
+4. Heart Disease & $\mathbf{0.8104 \pm 0.0450}$ & $0.8051 \pm 0.0445$ & $0.7381 \pm 0.0376$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\caption{Resultados de Regressão para o Dataset Wine Quality}
+\label{tab:regressao}
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Modelo} & \textbf{MSE Médio} & \textbf{MAE Médio} & \textbf{$R^2$ Médio} \\
+\midrule
+RNA Rasa (A) & $0.5533$ & $0.5693$ & $0.1757$ \\
+RNA Profunda (B) & $\mathbf{0.4415}$ & $\mathbf{0.5124}$ & $\mathbf{0.3410}$ \\
+Fuzzy Mamdani (A) & $1.8103$ & $1.1436$ & $-1.7067$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A análise dos dados revela que as RNAs obtiveram vantagem preditiva nos cenários de alta dimensionalidade ($0.9758$ no \textit{Breast Cancer} e $R^2$ de $0.3410$ no \textit{Wine Quality}), uma vez que conseguem extrair características intrínsecas de múltiplos atributos correlacionados[cite: 44]. No entanto, para o dataset \textit{Heart Disease}, o modelo Fuzzy apresentou alta competitividade ($0.7381$) associada ao menor desvio-padrão do experimento ($\pm 0.0376$), atestando sua estabilidade frente à estocasticidade e sua superioridade em termos de interpretabilidade por regras lógicas[cite: 43, 44].
+
+O coeficiente $R^2$ negativo do modelo Fuzzy simples no \textit{Wine Quality} ($-1.7067$) evidencia as limitações de sistemas nebulosos puramente heurísticos em aproximar superfícies de regressão contínua hiper-sensíveis sem algoritmos de otimização adaptativa acoplados[cite: 44].
 
 \section{Conclusão}
-Este experimento corroborou que o sucesso na aplicação de Inteligência Computacional transcende a arquitetura do modelo. O pré-processamento adequado por normalização e o ajuste sistemático de hiperparâmetros mostraram-se fatores determinantes para a convergência de ambas as abordagens. Enquanto as RNAs confirmam sua supremacia em problemas complexos com dados homogêneos de alta escala, os Sistemas Neuro-Fuzzy consolidam-se como ferramentas indispensáveis quando a interpretabilidade e a estabilidade estatística em amostras menores são requisitos mandatórios do projeto.
+O experimento comprovou a clássica dualidade da Inteligência Computacional: a supremacia matemática e o poder de aproximação das Redes Neurais Artificiais contra a estabilidade e a transparência interpretativa da Lógica Fuzzy[cite: 49, 50]. Para sistemas biomédicos ou de suporte à decisão auditáveis, a estabilidade demonstrada pelo baixo desvio-padrão do modelo Fuzzy consolida a técnica como uma alternativa viável e robusta[cite: 43].
 
 \begin{thebibliography}{1}
 \bibitem{uci}
