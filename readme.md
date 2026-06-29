@@ -28,11 +28,13 @@ No Windows (Prompt de Comando):DOS.venv\Scripts\activate.bat
 🚀 Como Executar os ExperimentosO código fonte está organizado na pasta src/. Os scripts executam automaticamente o loop de 21 rodadas independentes utilizando sementes amostrais alteradas incrementalmente para anular o viés de estocasticidade (inicialização aleatória de pesos).  Parte 1: Executar Redes Neurais (Iris e Breast Cancer)Roda os modelos de classificação das RNAs (Configuração Rasa vs. Profunda):Bashpython "src/Loop dos Experimentos.py"
 Parte 2: Executar Sistemas Fuzzy (Iris e Breast Cancer)Aplica a seleção de características via ANOVA e executa o motor de inferência Mamdani (Triangular vs. Gaussiano):Bashpython "src/Experimentos Fuzzy.py"
 Parte 3: Executar Scripts Unificados Finais (Wine Quality e Heart Disease)Faz o download em tempo real das duas últimas bases e computa as métricas de classificação e regressão (MSE, MAE, $R^2$ e Acurácia):  Bashpython "src/experimentos_finais.py"
-📁 Estrutura de Diretórios do ProjetoPlaintext├── .venv/                  # Ambiente virtual isolado do Python
-├── src/                    # Código-fonte executável do projeto
-│   ├── Loop dos Experimentos.py  # Pipeline das RNAs iniciais
-│   ├── Experimentos Fuzzy.py     # Pipeline dos modelos Fuzzy iniciais
-│   └── experimentos_finais.py    # Download e inferência dos datasets finais
-├── relatorio_ic_geovane.tex # Relatório completo estruturado no formato IEEE
-├── README.md               # Este guia explicativo de reprodução
-└── IC_016_Atividade_RNA_NF.pdf # Enunciado oficial da atividade do CEFET-MG
+├── .vscode/                     # Configurações locais do editor VS Code
+├── tstex_modules/               # Módulos e pacotes auxiliares de compilação LaTeX
+├── .gitignore                   # Arquivo de exclusão de arquivos temporários do Git
+├── readme.md                    # Este guia explicativo de reprodução e execução
+├── IEEE_Journal_Paper_Template/ # Pasta contendo o artigo científico estruturado
+│   └── relatorio_ic_geovane.tex # Seu arquivo-fonte principal do relatório (IEEE)
+└── src/                         # Código-fonte executável do projeto
+    ├── Loop dos Experimentos.py # Pipeline e loops das RNAs iniciais
+    ├── Experimentos Fuzzy.py    # Pipeline dos modelos Fuzzy iniciais
+    └── experimentos_finais.py   # Download e inferência dos datasets finais
