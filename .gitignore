@@ -1,0 +1,45 @@
+# LaTeX
+*.aux
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.lof
+*.lot
+*.nav
+*.out
+*.pdf
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+_minted-*/
+latexmkrc
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# VS Code local state
+.vscode/*.log
+
+# Archives and build caches
+*.zip
+*.tar
+*.gz
+*.7z
