@@ -1,107 +1,38 @@
-Aqui está a **Análise Exploratória Básica** estruturada para cada um dos 4 conjuntos de dados selecionados da UCI. Você pode copiar e colar este bloco diretamente na seção correspondente do seu artigo no formato IEEE , pois ele já atende a todos os critérios exigidos pelo professor (descrição do problema, número de amostras, número de atributos, tipo de tarefa, variável de saída e análise de balanceamento).
+# Comparação de Desempenho: Redes Neurais Artificiais vs. Sistemas Fuzzy
+
+Este projeto foi desenvolvido como requisito para a atividade prática da disciplina de **Inteligência Computacional** do **CEFET-MG (Semestre 01/2026)**, ministrada pelo **Prof. [cite_start]Alisson Marques da Silva**[cite: 1, 2, 30].
+
+[cite_start]O objetivo do trabalho é avaliar de forma justa, rigorosa e isonômica duas configurações de Redes Neurais Artificiais (MLP) e duas abordagens baseadas em Lógica Fuzzy/Neuro-Fuzzy em 4 conjuntos de dados reais do repositório *UCI Machine Learning*[cite: 4, 8, 9, 14].
+
+## 📊 Conjuntos de Dados Utilizados
+[cite_start]Os experimentos foram rodados sob as mesmas partições (60% Treino / 20% Validação / 20% Teste) nas seguintes bases públicas da UCI[cite: 25, 26, 34]:
+1. **Iris:** Classificação Multiclasse (Perfeitamente Balanceado).
+2. **Breast Cancer Wisconsin:** Classificação Binária (Levemente Desbalanceado).
+3. **Wine Quality (Red):** Regressão Quantitativa (Distribuição Unimodal).
+4. **Heart Disease (Statlog):** Classificação Binária (Atributos Numéricos e Categóricos Mistos).
 
 ---
 
-## 📊 Seção: Análise Exploratória dos Dados
+## 🛠️ Requisitos e Configuração do Ambiente
 
-1. Iris Flower Dataset 
+O projeto foi isolado em um ambiente virtual do Python para garantir que as versões internas das dependências de grafos e versionamento do `scikit-fuzzy` funcionassem sem quebra de compatibilidade.
 
-* **Descrição do Problema:** Trata-se de um problema clássico de botânica onde o objetivo é identificar a espécie de uma planta do gênero Íris com base nas dimensões físicas de suas pétalas e sépalas.
-* 
-**Tipo de Tarefa:** Classificação Multiclasse.
-
-
-* 
-**Número de Amostras ($N$):** 150 amostras.
+### 1. Clonando ou acessando a pasta do projeto:
+```bash
+cd "C:/Users/geova/Documents/mestrado/trabaçho final"
 
 
-* 
-**Número de Atributos:** 4 atributos preditivos numéricos (contínuos, em cm):
-
-
-1. Comprimento da sépala (`sepal length`)
-2. Largura da sépala (`sepal width`)
-3. Comprimento da pétala (`petal length`)
-4. Largura da pétala (`petal width`)
-
-
-* 
-**Variável de Saída (Target):** Espécie da planta (Classe).
-
-
-* **Análise de Balanceamento:** **Perfeitamente balanceado**. O dataset possui exatamente 50 amostras para cada uma das 3 classes (`Iris-setosa`, `Iris-versicolor` e `Iris-virginica`), totalizando uma distribuição de 33,3% para cada. Não há necessidade de técnicas de reamostragem.
-
----
-
-2. Breast Cancer Wisconsin (Diagnostic) 
-
-* **Descrição do Problema:** Análise computacional para o diagnóstico clínico de câncer de mama. O objetivo é prever se uma massa tumoral aspirada por agulha fina é maligna ou benigna com base em características geométricas e texturais do núcleo celular.
-* 
-**Tipo de Tarefa:** Classificação Binária.
-
-
-* 
-**Número de Amostras ($N$):** 569 amostras.
-
-
-* 
-**Número de Atributos:** 30 atributos preditivos numéricos (contínuos, representando valores médios, erros-padrão e os piores valores de características como raio, textura, perímetro, área, suavidade, concavidade, etc.).
-
-
-* 
-**Variável de Saída (Target):** Diagnóstico clínico  (`Maligno` ou `Benigno`).
-
-
-* **Análise de Balanceamento:** **Levemente desbalanceado**. O conjunto contém 357 amostras benignas (62,7%) e 212 amostras malignas (37,3%). Por ser um desbalanceamento sutil, os modelos de RNAs e Neuro-Fuzzy conseguem aprender sem a necessidade estrita de algoritmos de balanceamento (como SMOTE), mas exige atenção redobrada à métrica de **F1-Score** e **Revocação** (sensibilidade) na matriz de confusão.
-
-
-
----
-
-3. Wine Quality Dataset (Vinho Tinto) 
-
-* **Descrição do Problema:** Avaliação da qualidade sensorial de vinhos de mesa produzidos no norte de Portugal (Vinho Verde). O objetivo é modelar a percepção humana de qualidade a partir de medições físico-químicas laboratoriais do produto.
-* 
-**Tipo de Tarefa:** Regressão ou Classificação Ordinal. (Recomenda-se tratar como Regressão para testar as métricas MSE, RMSE e MAE exigidas no trabalho ).
-
-
-* 
-**Número de Amostras ($N$):** 1.599 amostras.
-
-
-* 
-**Número de Atributos:** 11 atributos preditivos numéricos (contínuos e discretos, como acidez fixa, acidez volátil, ácido cítrico, açúcar residual, cloretos, dióxido de enxofre livre, dióxido de enxofre total, densidade, pH, sulfatos e teor alcoólico).
-
-
-* 
-**Variável de Saída (Target):** Qualidade do vinho (nota contínua/inteira de 0 a 10).
-
-
-* **Análise de Distribuição:** **Distribuição Normal/Sino**. A maioria esmagadora dos vinhos concentra-se nas notas intermediárias 5 e 6 (mais de 80% dos dados). Existem pouquíssimos registros de vinhos excelentes (notas 7 ou 8) ou muito ruins (notas 3 ou 4). Esse comportamento desafiará as RNAs e os sistemas Neuro-Fuzzy a não convergirem apenas para a média do mercado.
-
----
-
-4. Heart Disease Dataset (Statlog) 
-
-* **Descrição do Problema:** Diagnóstico de presença ou ausência de doença arterial coronariana em pacientes cardíacos, combinando dados demográficos, sintomas clínicos e exames laboratoriais (como eletrocardiograma e teste de esforço).
-* 
-**Tipo de Tarefa:** Classificação Binária.
-
-
-* 
-**Número de Amostras ($N$):** 270 amostras.
-
-
-* 
-**Número de Atributos:** 13 atributos preditivos mistos (inclui variáveis contínuas como idade, pressão arterial em repouso, colesterol, frequência cardíaca máxima e variáveis categóricas/nominais como sexo, tipo de dor no peito, açúcar no sangue em jejum, resultados do ECG, etc.).
-
-
-* 
-**Variável de Saída (Target):** Presença ou ausência de doença cardíaca.
-
-
-* **Análise de Balanceamento:** **Bem balanceado**. Contém 150 amostras de pacientes saudáveis (55,6%) e 120 amostras de pacientes com a doença (44,4%). É uma base excelente e limpa para testar a estabilidade dos modelos Fuzzy em classificar dados de naturezas distintas (numéricos e categóricos misturados).
-
----
-
-### 💡 Próximo Passo Prático para o Grupo:
+ Ativando o Ambiente Virtual (.venv):No Windows (PowerShell):PowerShell& ".venv/Scripts/Activate.ps1"
+No Windows (Prompt de Comando):DOS.venv\Scripts\activate.bat
+3. Instalação das Dependências:Caso precise reconstruir o ambiente do zero, instale os pacotes principais e as dependências internas do compilador Fuzzy:Bashpip install numpy pandas scikit-learn scikit-fuzzy packaging networkx
+🚀 Como Executar os ExperimentosO código fonte está organizado na pasta src/. Os scripts executam automaticamente o loop de 21 rodadas independentes utilizando sementes amostrais alteradas incrementalmente para anular o viés de estocasticidade (inicialização aleatória de pesos).  Parte 1: Executar Redes Neurais (Iris e Breast Cancer)Roda os modelos de classificação das RNAs (Configuração Rasa vs. Profunda):Bashpython "src/Loop dos Experimentos.py"
+Parte 2: Executar Sistemas Fuzzy (Iris e Breast Cancer)Aplica a seleção de características via ANOVA e executa o motor de inferência Mamdani (Triangular vs. Gaussiano):Bashpython "src/Experimentos Fuzzy.py"
+Parte 3: Executar Scripts Unificados Finais (Wine Quality e Heart Disease)Faz o download em tempo real das duas últimas bases e computa as métricas de classificação e regressão (MSE, MAE, $R^2$ e Acurácia):  Bashpython "src/experimentos_finais.py"
+📁 Estrutura de Diretórios do ProjetoPlaintext├── .venv/                  # Ambiente virtual isolado do Python
+├── src/                    # Código-fonte executável do projeto
+│   ├── Loop dos Experimentos.py  # Pipeline das RNAs iniciais
+│   ├── Experimentos Fuzzy.py     # Pipeline dos modelos Fuzzy iniciais
+│   └── experimentos_finais.py    # Download e inferência dos datasets finais
+├── relatorio_ic_geovane.tex # Relatório completo estruturado no formato IEEE
+├── README.md               # Este guia explicativo de reprodução
+└── IC_016_Atividade_RNA_NF.pdf # Enunciado oficial da atividade do CEFET-MG
