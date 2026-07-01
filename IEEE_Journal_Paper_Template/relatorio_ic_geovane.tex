@@ -29,14 +29,14 @@ Inteligência Computacional, Redes Neurais Artificiais, Sistemas Fuzzy, Metodolo
 \end{IEEEkeywords}
 
 \section{Introdução}
-O campo da Inteligência Computacional (IC) é amplamente dominado por abordagens baseadas em dados[cite: 1]. Dentre essas técnicas, destacam-se as Redes Neurais Artificiais (RNAs), consagradas pelo alto poder de aproximação de funções não lineares, e os Sistemas Fuzzy, valorizados por sua capacidade de fornecer mapeamentos transparentes na forma de regras lógicas do tipo "SE-ENTÃO"[cite: 14].
+O campo da Inteligência Computacional (IC) é amplamente dominado por abordagens baseadas em dados. Dentre essas técnicas, destacam-se as Redes Neurais Artificiais (RNAs), consagradas pelo alto poder de aproximação de funções não lineares, e os Sistemas Fuzzy, valorizados por sua capacidade de fornecer mapeamentos transparentes na forma de regras lógicas do tipo "SE-ENTÃO".
 
-O objetivo fundamental deste trabalho consiste em implementar, avaliar e comparar de forma isonômica e rigorosa diferentes arquiteturas de RNAs e modelos baseados em lógica fuzzy em quatro conjuntos de dados do mundo real[cite: 4]. O foco principal está no cumprimento estrito de uma metodologia experimental sólida, na análise estatística de repetibilidade e no entendimento do impacto da variação de parâmetros[cite: 5].
+O objetivo fundamental deste trabalho consiste em implementar, avaliar e comparar de forma isonômica e rigorosa diferentes arquiteturas de RNAs e modelos baseados em lógica fuzzy em quatro conjuntos de dados do mundo real. O foco principal está no cumprimento estrito de uma metodologia experimental sólida, na análise estatística de repetibilidade e no entendimento do impacto da variação de parâmetros.
 
 \section{Descrição dos Conjuntos de Dados e Análise Exploratória}
-Para garantir uma validação holística das propriedades de generalização dos algoritmos, foram selecionadas quatro bases com propriedades matemáticas distintas, provenientes do repositório oficial \textit{UCI Machine Learning}[cite: 9].
+Para garantir uma validação holística das propriedades de generalização dos algoritmos, foram selecionadas quatro bases com propriedades matemáticas distintas, provenientes do repositório oficial \textit{UCI Machine Learning}.
 
-A Tabela~\ref{tab:datasets} resume a estrutura dimensional de cada conjunto de dados antes das transformações de engenharia de recursos[cite: 10, 11].
+A Tabela~\ref{tab:datasets} resume a estrutura dimensional de cada conjunto de dados antes das transformações de engenharia de recursos.
 
 \begin{table}[htbp]
 \caption{Sumário dos Conjuntos de Dados Selecionados (UCI)}
@@ -55,31 +55,31 @@ A Tabela~\ref{tab:datasets} resume a estrutura dimensional de cada conjunto de d
 \end{table}
 
 \subsection{Iris Flower Dataset}
-O dataset clássico apresenta um cenário perfeitamente balanceado composto por 50 instâncias para cada uma de suas 3 classes. Os atributos medem dimensões estruturais (comprimento e largura da sépala e da pétala)[cite: 10]. A análise exploratória revela forte separabilidade linear da classe \textit{setosa}, enquanto as outras duas apresentam sobreposições marginais[cite: 11].
+O dataset clássico apresenta um cenário perfeitamente balanceado composto por 50 instâncias para cada uma de suas 3 classes \cite{iris_53}. Os atributos medem dimensões estruturais (comprimento e largura da sépala e da pétala). A análise exploratória revela forte separabilidade linear da classe \textit{setosa}, enquanto as outras duas apresentam sobreposições marginais.
 
 \subsection{Breast Cancer Wisconsin (Diagnostic)}
-Base médica de alta dimensionalidade (30 atributos extraídos de imagens de biópsias)[cite: 10]. Exibe um leve desbalanceamento (62,7\% benignos e 37,3\% malignos)[cite: 11]. Vários de seus atributos contínuos possuem correlação linear próxima de 1,0, o que impõe a necessidade de tratamentos de regularização[cite: 20].
+Base médica de alta dimensionalidade composta por 30 atributos extraídos de imagens de biópsias \cite{breast_cancer_wisconsin_(diagnostic)_17}. Exibe um leve desbalanceamento (62,7\% benignos e 37,3\% malignos). Vários de seus atributos contínuos possuem correlação linear próxima de 1,0, o que impõe a necessidade de tratamentos de regularização.
 
 \subsection{Wine Quality Dataset}
-Focado no teste de regressão quantitativa, este conjunto avalia propriedades físico-químicas de vinhos verdes[cite: 8, 11]. A variável alvo de qualidade varia em uma escala de 3 a 8[cite: 11]. A distribuição amostral assemelha-se a uma curva normal, concentrando mais de 80\% dos dados nas notas centrais 5 e 6[cite: 11].
+Focado no teste de regressão quantitativa, este conjunto avalia propriedades físico-químicas de vinhos verdes \cite{wine_quality_186}. A variável alvo de qualidade varia em uma escala de 3 a 8. A distribution amostral assemelha-se a uma curva normal, concentrando mais de 80\% dos dados nas notas centrais 5 e 6.
 
 \subsection{Heart Disease Dataset (Statlog)}
-Apresenta um cenário balanceado (55,6\% saudáveis e 44,4\% cardiopatas), porém introduz atributos de natureza mista[cite: 11]. Variáveis numéricas contínuas operam em conjunto com atributos categóricos ordinais e nominais[cite: 11]. É um ambiente propício para sistemas fuzzy, onde os termos linguísticos reduzem a complexidade de variáveis híbridas[cite: 21].
+Apresenta um cenário balanceado (55,6\% saudáveis e 44,4\% cardiopatas), porém introduz atributos de natureza mista \cite{heart_disease_45}. Variáveis numéricas contínuas operam em conjunto com atributos categóricos ordinais e nominais. É um ambiente propício para sistemas fuzzy, onde os termos linguísticos reduzem a complexidade de variáveis híbridas.
 
 \section{Metodologia Experimental e Configuração}
-Adotou-se o protocolo de divisão de dados estático e idêntico para todos os competidores, fracionando cada dataset em 60\% para treinamento, 20\% para validação e 20\% reservados exclusivamente para o teste final[cite: 26]. Os experimentos foram submetidos a exatamente 21 execuções independentes por algoritmo em cada base[cite: 32].
+Adotou-se o protocolo de divisão de dados estático e idêntico para todos os competidores, fracionando cada dataset em 60\% para treinamento, 20\% para validação e 20\% reservados exclusivamente para o teste final. Os experimentos foram submetidos a exatamente 21 execuções independentes por algoritmo em cada base.
 
 \subsection{Algoritmos Avaliados}
-O estudo incluiu quatro algoritmos estruturados da seguinte forma[cite: 13, 14]:
+O estudo incluiu quatro algoritmos estruturados da seguinte forma:
 \begin{itemize}
-    \item \textbf{RNA Configuração A (MLP-Rasa):} Rede \textit{Multilayer Perceptron} contendo uma única camada oculta com 16 neurônios, ativação ReLU e max iterações igual a 500[cite: 19, 20].
-    \item \textbf{RNA Configuração B (MLP-Profunda):} Arquitetura profunda contendo duas camadas ocultas ($32 \times 16$), ativação TANH e max iterações igual a 500[cite: 19, 20].
-    \item \textbf{Fuzzy Configuração A:} Sistema Fuzzy Mamdani baseado em funções de pertinência triangulares e conjunto reduzido de regras lógicas[cite: 21].
-    \item \textbf{Fuzzy Configuração B:} Sistema Fuzzy baseado em funções de pertinência gaussianas para maior suavidade nas transições[cite: 21].
+    \item \textbf{RNA Configuração A (MLP-Rasa):} Rede \textit{Multilayer Perceptron} contendo uma única camada oculta com 16 neurônios, ativação ReLU e max iterações igual a 500.
+    \item \textbf{RNA Configuração B (MLP-Profunda):} Arquitetura profunda contendo duas camadas ocultas ($32 \times 16$), ativação TANH e max iterações igual a 500.
+    \item \textbf{Fuzzy Configuração A:} Sistema Fuzzy Mamdani baseado em funções de pertinência triangulares e conjunto reduzido de regras lógicas.
+    \item \textbf{Fuzzy Configuração B:} Sistema Fuzzy baseado em funções de pertinência gaussianas para maior suavidade nas transições.
 \end{itemize}
 
 \section{Resultados e Discussão Crítica}
-Os resultados quantitativos obtidos experimentalmente após as 21 execuções independentes estão consolidados nas Tabelas~\ref{tab:classificacao} e~\ref{tab:regressao}[cite: 32, 39].
+Os resultados quantitativos obtidos experimentalmente após as 21 execuções independentes estão consolidados nas Tabelas~\ref{tab:classificacao} e~\ref{tab:regressao}.
 
 \begin{table}[htbp]
 \caption{Resultados para as Tarefas de Classificação (Média $\pm \sigma$)}
@@ -111,16 +111,15 @@ Fuzzy Mamdani (A) & $1.8103$ & $1.1436$ & $-1.7067$ \\
 \end{tabular}
 \end{table}
 
-A análise dos dados revela que as RNAs obtiveram vantagem preditiva nos cenários de alta dimensionalidade ($0.9758$ no \textit{Breast Cancer} e $R^2$ de $0.3410$ no \textit{Wine Quality}), uma vez que conseguem extrair características intrínsecas de múltiplos atributos correlacionados[cite: 44]. No entanto, para o dataset \textit{Heart Disease}, o modelo Fuzzy apresentou alta competitividade ($0.7381$) associada ao menor desvio-padrão do experimento ($\pm 0.0376$), atestando sua estabilidade frente à estocasticidade e sua superioridade em termos de interpretabilidade por regras lógicas[cite: 43, 44].
+A análise dos dados revela que as RNAs obtiveram vantagem preditiva nos cenários de alta dimensionalidade ($0.9758$ no \textit{Breast Cancer} e $R^2$ de $0.3410$ no \textit{Wine Quality}), uma vez que conseguem extrair características intrínsecas de múltiplos atributos correlacionados. No entanto, para o dataset \textit{Heart Disease}, o modelo Fuzzy apresentou alta competitividade ($0.7381$) associada ao menor desvio-padrão do experimento ($\pm 0.0376$), atestando sua estabilidade frente à estocasticidade e sua superioridade em termos de interpretabilidade por regras lógicas.
 
-O coeficiente $R^2$ negativo do modelo Fuzzy simples no \textit{Wine Quality} ($-1.7067$) evidencia as limitações de sistemas nebulosos puramente heurísticos em aproximar superfícies de regressão contínua hiper-sensíveis sem algoritmos de otimização adaptativa acoplados[cite: 44].
+O coeficiente $R^2$ negativo do modelo Fuzzy simples no \textit{Wine Quality} ($-1.7067$) evidencia as limitações de sistemas nebulosos puramente heurísticos em aproximar superfícies de regressão contínua hiper-sensíveis sem algoritmos de otimização adaptativa acoplados.
 
 \section{Conclusão}
-O experimento comprovou a clássica dualidade da Inteligência Computacional: a supremacia matemática e o poder de aproximação das Redes Neurais Artificiais contra a estabilidade e a transparência interpretativa da Lógica Fuzzy[cite: 49, 50]. Para sistemas biomédicos ou de suporte à decisão auditáveis, a estabilidade demonstrada pelo baixo desvio-padrão do modelo Fuzzy consolida a técnica como uma alternativa viável e robusta[cite: 43].
+O experimento comprovou a clássica dualidade da Inteligência Computacional: a supremacia matemática e o poder de aproximação das Redes Neurais Artificiais contra a estabilidade e a transparência interpretativa da Lógica Fuzzy. Para sistemas biomédicos ou de suporte à decisão auditáveis, a estabilidade demonstrada pelo baixo desvio-padrão do modelo Fuzzy consolida a técnica como uma alternativa viável e robusta.
 
-\begin{thebibliography}{1}
-\bibitem{uci}
-D.~Kelly, R.~Longjohn, and K.~Nottingham, ``The UCI Machine Learning Repository,'' 2025. [Online]. Available: \url{https://archive.ics.uci.edu}
-\end{thebibliography}
+% Inclusão dinâmica do arquivo referencias.bib
+\bibliographystyle{IEEEtran}
+\bibliography{referencias}
 
 \end{document}
