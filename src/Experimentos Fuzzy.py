@@ -5,7 +5,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.datasets import load_iris, load_breast_cancer
 from sklearn.metrics import accuracy_score
-from evorbf.models import RbfClassifier  # <-- Novo Classificador RBF do grupo
+from sklearn.neural_network import MLPClassifier  # <-- MLP de volta para o time!
+from evorbf import RbfClassifier  
 import skfuzzy as fuzzy
 import skfuzzy.control as ctrl
 import warnings
@@ -20,6 +21,8 @@ def rodar_experimento_fuzzy(nome_base, X, y):
     selector = SelectKBest(score_func=f_classif, k=2)
     X_reduzido = selector.fit_transform(X, y)
     
+    acc_mlp_rasa = []
+    acc_mlp_prof = []
     acc_rbf = []
     acc_fuzzy_a = []
     acc_fuzzy_b = []
@@ -27,6 +30,7 @@ def rodar_experimento_fuzzy(nome_base, X, y):
     for i in range(NUM_EXECUCOES):
         seed_rodada = 42 + i
         
+        # Divisão isonômica padrão (60/20/20) para as Redes
         X_train, X_temp, y_train, y_temp = train_test_split(
             X, y, test_size=0.40, random_state=seed_rodada, stratify=y
         )
@@ -34,7 +38,7 @@ def rodar_experimento_fuzzy(nome_base, X, y):
             X_temp, y_temp, test_size=0.50, random_state=seed_rodada, stratify=y_temp
         )
         
-        # Partição reduzida para os modelos Fuzzy (2 atributos)
+        # Partição para os modelos Fuzzy (2 atributos)
         X_train_f, X_temp_f, _, _ = train_test_split(
             X_reduzido, y, test_size=0.40, random_state=seed_rodada, stratify=y
         )
@@ -49,12 +53,28 @@ def rodar_experimento_fuzzy(nome_base, X, y):
         X_train_f_scaled = scaler.fit_transform(X_train_f)
         X_test_f_scaled = scaler.transform(X_test_f)
         
-        # --- 1. TREINAMENTO DA REDE RBF ---
-        rbf = RbfClassifier()
-        rbf.fit(X_train_scaled, y_train)
-        acc_rbf.append(accuracy_score(y_test, rbf.predict(X_test_scaled)))
+        # --- 1. TREINAMENTO MLP RASA ---
+        mlp_rasa = MLPClassifier(hidden_layer_sizes=(16,), activation='relu', max_iter=500, random_state=seed_rodada)
+        mlp_rasa.fit(X_train_scaled, y_train)
+        acc_mlp_rasa.append(accuracy_score(y_test, mlp_rasa.predict(X_test_scaled)))
         
-        # --- 2. CONFIGURAÇÃO FUZZY MAMDANI A (Triangular) ---
+        # --- 2. TREINAMENTO MLP PROFUNDA ---
+        mlp_prof = MLPClassifier(hidden_layer_sizes=(32, 16), activation='tanh', max_iter=500, random_state=seed_rodada)
+        mlp_prof.fit(X_train_scaled, y_train)
+        acc_mlp_prof.append(accuracy_score(y_test, mlp_prof.predict(X_test_scaled)))
+        
+        # --- 3. TREINAMENTO DA REDE RBF ---
+        try:
+            rbf = RbfClassifier()
+            rbf.fit(X_train_scaled, y_train)
+            acc_rbf.append(accuracy_score(y_test, rbf.predict(X_test_scaled)))
+        except:
+            # Fallback caso a evorbf exija dados estritamente convertidos
+            rbf = RbfClassifier()
+            rbf.fit(X_train_scaled, y_train.astype(int))
+            acc_rbf.append(accuracy_score(y_test, rbf.predict(X_test_scaled)))
+        
+        # --- 4. CONFIGURAÇÃO FUZZY MAMDANI A (Triangular) ---
         v1 = ctrl.Antecedent(np.linspace(-3, 3, 50), 'v1')
         v2 = ctrl.Antecedent(np.linspace(-3, 3, 50), 'v2')
         saida = ctrl.Consequent(np.linspace(0, 1, 50), 'saida')
@@ -70,7 +90,7 @@ def rodar_experimento_fuzzy(nome_base, X, y):
         r2 = ctrl.Rule(v1['alta'] | v2['alta'], saida['classe_1'])
         sim_a = ctrl.ControlSystemSimulation(ctrl.ControlSystem([r1, r2]))
         
-        # --- 3. CONFIGURAÇÃO FUZZY MAMDANI B (Gaussiana) ---
+        # --- 5. CONFIGURAÇÃO FUZZY MAMDANI B (Gaussiana) ---
         v1_g = ctrl.Antecedent(np.linspace(-3, 3, 50), 'v1_g')
         v2_g = ctrl.Antecedent(np.linspace(-3, 3, 50), 'v2_g')
         v1_g['baixa'] = fuzzy.gaussmf(v1_g.universe, -1.5, 0.8)
@@ -103,6 +123,8 @@ def rodar_experimento_fuzzy(nome_base, X, y):
         acc_fuzzy_a.append(accuracy_score(y_test, preds_a))
         acc_fuzzy_b.append(accuracy_score(y_test, preds_b))
         
+    print(f"MLP Rasa (Config A)            -> Média: {np.mean(acc_mlp_rasa):.4f} | Desvio: {np.std(acc_mlp_rasa):.4f}")
+    print(f"MLP Profunda (Config B)        -> Média: {np.mean(acc_mlp_prof):.4f} | Desvio: {np.std(acc_mlp_prof):.4f}")
     print(f"Rede Neural RBF                -> Média: {np.mean(acc_rbf):.4f} | Desvio: {np.std(acc_rbf):.4f}")
     print(f"Fuzzy Mamdani A (Triangular)   -> Média: {np.mean(acc_fuzzy_a):.4f} | Desvio: {np.std(acc_fuzzy_a):.4f}")
     print(f"Fuzzy Mamdani B (Gaussiana)    -> Média: {np.mean(acc_fuzzy_b):.4f} | Desvio: {np.std(acc_fuzzy_b):.4f}")
