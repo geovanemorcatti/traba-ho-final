@@ -1,0 +1,97 @@
+\documentclass[10pt, aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+% --- Configurações Iniciais ---
+\title[ RNAs vs Sistemas Fuzzy]{Análise Comparativa de Desempenho: Redes Neurais Artificiais vs. Sistemas Fuzzy}
+\subtitle{Cenários Complexos de Classificação e Regressão (UCI Repository)}
+\author[Geovane Morcatti]{Geovane de Freitas Queiroz Morcatti \and Grupo}
+\institution[CEFET-MG]{Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG) \\ Mestrado em Modelagem Matemática e Computacional}
+\date[Amanhã]{Julho de 2026}
+
+\begin{document}
+
+% --- SLIDE 1: CAPA ---
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% --- SLIDE 2: METODOLOGIA ---
+\begin{frame}{Metodologia e Rigor Experimental}
+    \begin{itemize}
+        \item \textbf{Divisão Isonômica dos Dados:} Proporção estrita de 60\% Treinamento, 20\% Validação e 20\% Teste.
+        \item \textbf{Mitigação da Estocasticidade:} Protocolo rigoroso de \textbf{21 execuções independentes} por algoritmo, avaliando média e desvio-padrão ($\pm \sigma$).
+        \item \textbf{Engenharia de Recursos:} Uso de \textit{SelectKBest} (ANOVA) para reduzir o espaço a 2 atributos nos modelos Fuzzy, viabilizando o universo de regras lógicas.
+    \end{itemize}
+\end{frame}
+
+% --- SLIDE 3: DATASETS ---
+\begin{frame}{Conjuntos de Dados Avaliados (UCI Repository)}
+    \centering
+    \begin{tabular}{lcccc}
+        \toprule
+        \textbf{Dataset} & \textbf{Tarefa} & \textbf{Amostras} & \textbf{Atributos} & \textbf{Target} \\
+        \midrule
+        1. Iris & Classif. Multi. & 150 & 4 Num. & 3 Classes (Balanceado) \\
+        2. Breast Cancer & Classif. Bin. & 569 & 30 Num. & M/B (Alta Dimensionalidade) \\
+        3. Heart Disease & Classif. Bin. & 270 & 13 Mistos & S/N (Dados Híbridos) \\
+        4. Wine Quality & Regressão & 1.599 & 11 Num. & Contínuo (Notas 3 a 8) \\
+        \bottomrule
+    \end{tabular}
+\end{frame}
+
+% --- SLIDE 4: RESULTADOS CLASSIFICAÇÃO ---
+\begin{frame}{Resultados — Tarefas de Classificação}
+    \centering
+    \textbf{Acurácia Média $\pm$ Desvio-Padrão ($\sigma$)} \\
+    \vspace{0.2cm}
+    \begin{tabular}{lcccc}
+        \toprule
+        \textbf{Dataset} & \textbf{MLP Rasa (A)} & \textbf{MLP Profunda (B)} & \textbf{Rede Neural RBF} & \textbf{Fuzzy (Melhor)} \\
+        \midrule
+        Iris & $0.9571 \pm 0.0426$ & $\mathbf{0.9667 \pm 0.0341}$ & $0.9302 \pm 0.0503$ & $0.6206 \pm 0.0281$ (A) \\
+        Breast Cancer & $\mathbf{0.9758 \pm 0.0130}$ & $0.9683 \pm 0.0187$ & $0.9415 \pm 0.0128$ & $0.1257 \pm 0.0215$ (B) \\
+        Heart Disease & $0.8104 \pm 0.0450$ & $0.8051 \pm 0.0445$ & $\mathbf{0.8210 \pm 0.0503}$ & $0.7381 \pm 0.0376$ (A) \\
+        \bottomrule
+    \end{tabular}
+    \vspace{0.3cm}
+    \begin{block}{Destaque do Experimento}
+        A \textbf{Rede RBF superou os demais modelos na base Heart Disease ($82.10\%$)}. Funções gaussianas locais isolam de forma mais eficiente agrupamentos críticos de sintomas híbridos.
+    \end{block}
+\end{frame}
+
+% --- SLIDE 5: RESULTADOS REGRESSÃO ---
+\begin{frame}{Resultados — Tarefa de Regressão (Wine Quality)}
+    \centering
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{Algoritmo Avaliado} & \textbf{MSE Médio} & \textbf{MAE Médio} & \textbf{$R^2$ Médio} \\
+        \midrule
+        MLP Rasa (Config. A) & $0.5533$ & $0.5693$ & $0.1757$ \\
+        MLP Profunda (Config. B) & $\mathbf{0.4415}$ & $\mathbf{0.5124}$ & $\mathbf{0.3410}$ \\
+        Rede Neural RBF & $10.1626$ & $3.0966$ & $-14.1763$ \\
+        Fuzzy Takagi-Sugeno (T-S) & $2.2396$ & $1.2573$ & $-2.3428$ \\
+        \bottomrule
+    \end{tabular}
+    \vspace{0.3cm}
+    \begin{alertblock}{Análise de Fronteiras e Erros}
+        O $R^2$ negativo da RBF decorre do uso do modelo \textit{RbfClassifier} adaptado. Tentar predizer um espaço contínuo usando fronteiras discretas gera aproximações em degraus, aumentando o erro residual.
+    \end{alertblock}
+\end{frame}
+
+% --- SLIDE 6: CONCLUSÃO ---
+\begin{frame}{Discussão Crítica e Conclusões}
+    \begin{itemize}
+        \item \textbf{Trade-off da Inteligência Computacional:} Redes Neurais (MLP e RBF) garantem superioridade preditiva matemática global, mas funcionam como "caixas-pretas".
+        \item \textbf{Estabilidade e Transparência Fuzzy:} Embora os modelos Fuzzy (Mamdani e T-S) sofram penalização na acurácia devido à redução forçada de atributos para evitar a explosão combinatória de regras, eles entregam os **menores desvios-padrão** do teste e permitem auditoria semântica por especialistas.
+        \item \textbf{Conclusão:} A escolha do modelo ideal deve balancear a necessidade de precisão computacional com o nível de interpretabilidade exigido pelo domínio (ex: sistemas médicos).
+    \end{itemize}
+\end{frame}
+
+\end{document}
