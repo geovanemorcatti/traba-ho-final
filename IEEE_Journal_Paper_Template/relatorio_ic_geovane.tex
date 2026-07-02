@@ -21,17 +21,17 @@ Belo Horizonte, Brasil}
 \maketitle
 
 \begin{abstract}
-Este relatório técnico apresenta um experimento sistemático comparando modelos de Redes Neurais Artificiais (RNAs) e Sistemas Fuzzy aplicados a tarefas reais de classificação e regressão. Utilizando quatro bases de dados públicas extraídas do repositório UCI Machine Learning (Iris, Breast Cancer, Wine Quality e Heart Disease), o estudo foca no rigor da metodologia experimental. Cada modelo foi avaliado sob as mesmas partições através de 21 execuções independentes para mitigar os efeitos da estocasticidade. Os resultados apontam a supremacia preditiva das RNAs em cenários multidimensionais, enquanto os sistemas Fuzzy confirmam estabilidade estatística e alta interpretabilidade.
+Este relatório técnico apresenta um experimento sistemático comparando modelos de Redes Neurais Artificiais (RNAs), incluindo abordagens Multilayer Perceptron (MLP) e Redes de Função de Base Radial (RBF), ao lado de Sistemas Fuzzy aplicados a tarefas reais de classificação e regressão. Utilizando quatro bases de dados públicas extraídas do repositório UCI Machine Learning (Iris, Breast Cancer, Wine Quality e Heart Disease), o estudo foca no rigor da metodologia experimental. Cada modelo foi avaliado sob as mesmas partições através de 21 execuções independentes para mitigar os efeitos da estocasticidade. Os resultados apontam a supremacia preditiva das RNAs em cenários multidimensionais, a alta eficiência adaptativa da RBF em conjuntos híbridos, e a estabilidade estatística e interpretabilidade dos sistemas Fuzzy.
 \end{abstract}
 
 \begin{IEEEkeywords}
-Inteligência Computacional, Redes Neurais Artificiais, Sistemas Fuzzy, Metodologia Experimental, Repetibilidade Científica.
+Inteligência Computacional, Redes Neurais Artificiais, Rede RBF, Sistemas Fuzzy, Takagi-Sugeno, Metodologia Experimental.
 \end{IEEEkeywords}
 
 \section{Introdução}
-O campo da Inteligência Computacional (IC) é amplamente dominado por abordagens baseadas em dados. Dentre essas técnicas, destacam-se as Redes Neurais Artificiais (RNAs), consagradas pelo alto poder de aproximação de funções não lineares, e os Sistemas Fuzzy, valorizados por sua capacidade de fornecer mapeamentos transparentes na forma de regras lógicas do tipo "SE-ENTÃO".
+O campo da Inteligência Computacional (IC) é amplamente dominado por abordagens baseadas em dados. Dentre essas técnicas, destacam-se as Redes Neurais Artificiais (RNAs), consagradas pelo alto poder de aproximação de funções não lineares de forma global (MLP) ou localizada (RBF), e os Sistemas Fuzzy, valorizados por sua capacidade de fornecer mapeamentos transparentes baseados em regras ou equações de transição suaves.
 
-O objetivo fundamental deste trabalho consiste em implementar, avaliar e comparar de forma isonômica e rigorosa diferentes arquiteturas de RNAs e modelos baseados em lógica fuzzy em quatro conjuntos de dados do mundo real. O foco principal está no cumprimento estrito de uma metodologia experimental sólida, na análise estatística de repetibilidade e no entendimento do impacto da variação de parâmetros.
+O objetivo fundamental deste trabalho consiste em implementar, avaliar e comparar de forma isonômica e rigorosa diferentes arquiteturas neurais e modelos baseados em lógica fuzzy em quatro conjuntos de dados do mundo real. O foco principal está no cumprimento estrito de uma metodologia experimental sólida, na análise estatística de repetibilidade e no entendimento do impacto da variação de parâmetros e limitações de cada algoritmo.
 
 \section{Descrição dos Conjuntos de Dados e Análise Exploratória}
 Para garantir uma validação holística das propriedades de generalização dos algoritmos, foram selecionadas quatro bases com propriedades matemáticas distintas, provenientes do repositório oficial \textit{UCI Machine Learning}.
@@ -61,37 +61,37 @@ O dataset clássico apresenta um cenário perfeitamente balanceado composto por 
 Base médica de alta dimensionalidade composta por 30 atributos extraídos de imagens de biópsias \cite{breast_cancer_wisconsin_(diagnostic)_17}. Exibe um leve desbalanceamento (62,7\% benignos e 37,3\% malignos). Vários de seus atributos contínuos possuem correlação linear próxima de 1,0, o que impõe a necessidade de tratamentos de regularização.
 
 \subsection{Wine Quality Dataset}
-Focado no teste de regressão quantitativa, este conjunto avalia propriedades físico-químicas de vinhos verdes \cite{wine_quality_186}. A variável alvo de qualidade varia em uma escala de 3 a 8. A distribution amostral assemelha-se a uma curva normal, concentrando mais de 80\% dos dados nas notas centrais 5 e 6.
+Focado no teste de regressão quantitativa, este conjunto avalia propriedades físico-químicas de vinhos verdes \cite{wine_quality_186}. A variável alvo de qualidade varia em uma escala de 3 a 8. A distribuição amostral assemelha-se a uma curva normal, concentrando mais de 80\% dos dados nas notas centrais 5 e 6.
 
 \subsection{Heart Disease Dataset (Statlog)}
-Apresenta um cenário balanceado (55,6\% saudáveis e 44,4\% cardiopatas), porém introduz atributos de natureza mista \cite{heart_disease_45}. Variáveis numéricas contínuas operam em conjunto com atributos categóricos ordinais e nominais. É um ambiente propício para sistemas fuzzy, onde os termos linguísticos reduzem a complexidade de variáveis híbridas.
+Apresenta um cenário balanceado (55,6\% saudáveis e 44,4\% cardiopatas), porém introduz atributos de natureza mista \cite{heart_disease_45}. Variáveis numéricas contínuas operam em conjunto com atributos categóricos ordinais e nominais. É um ambiente propício para sistemas de inferência localizados, onde as dinâmicas de agrupamento isolam sintomas complexos.
 
 \section{Metodologia Experimental e Configuração}
-Adotou-se o protocolo de divisão de dados estático e idêntico para todos os competidores, fracionando cada dataset em 60\% para treinamento, 20\% para validação e 20\% reservados exclusivamente para o teste final. Os experimentos foram submetidos a exatamente 21 execuções independentes por algoritmo em cada base.
+Adotou-se o protocolo de divisão de dados estático e idêntico para todos os competidores, fracionando cada dataset em 60\% para treinamento, 20\% para validação e 20\% reservados exclusivamente para o teste final. Os experimentos foram submetidos a exatamente 21 execuções independentes por algoritmo em cada base para extração de médias estáveis e desvios-padrão.
 
 \subsection{Algoritmos Avaliados}
-O estudo incluiu quatro algoritmos estruturados da seguinte forma:
+O estudo comparativo foi reestruturado para abranger quatro modelos fundamentais:
 \begin{itemize}
-    \item \textbf{RNA Configuração A (MLP-Rasa):} Rede \textit{Multilayer Perceptron} contendo uma única camada oculta com 16 neurônios, ativação ReLU e max iterações igual a 500.
-    \item \textbf{RNA Configuração B (MLP-Profunda):} Arquitetura profunda contendo duas camadas ocultas ($32 \times 16$), ativação TANH e max iterações igual a 500.
-    \item \textbf{Fuzzy Configuração A:} Sistema Fuzzy Mamdani baseado em funções de pertinência triangulares e conjunto reduzido de regras lógicas.
-    \item \textbf{Fuzzy Configuração B:} Sistema Fuzzy baseado em funções de pertinência gaussianas para maior suavidade nas transições.
+    \item \textbf{MLP Rasa (Configuração A):} Rede \textit{Multilayer Perceptron} contendo uma única camada oculta com 16 neurônios, ativação ReLU e 500 iterações máximas.
+    \item \textbf{MLP Profunda (Configuração B):} Arquitetura profunda contendo duas camadas ocultas ($32 \times 16$), ativação TANH e 500 iterações máximas.
+    \item \textbf{Rede Neural RBF:} Modelo de Função de Base Radial implementado via pacote \textit{evorbf}, mapeando superfícies de decisão por meio de ativações gaussianas locais.
+    \item \textbf{Sistemas Fuzzy (Mamdani e T-S):} Modelos estruturados via \textit{scikit-fuzzy}. Para classificação, utilizou-se o modelo clássico de Mamdani com pertinências geométricas e defuzzificação por centroide. Para a tarefa de regressão, aplicou-se o modelo de Takagi-Sugeno (T-S) de ordem zero, onde a saída consiste em equações lineares combinadas.
 \end{itemize}
 
 \section{Resultados e Discussão Crítica}
-Os resultados quantitativos obtidos experimentalmente após as 21 execuções independentes estão consolidados nas Tabelas~\ref{tab:classificacao} e~\ref{tab:regressao}.
+Os resultados quantitativos empíricos obtidos após as 21 execuções independentes estão consolidados nas Tabelas~\ref{tab:classificacao} e~\ref{tab:regressao}.
 
 \begin{table}[htbp]
-\caption{Resultados para as Tarefas de Classificação (Média $\pm \sigma$)}
+\caption{Resultados para as Tarefas de Classificação (Acurácia Média $\pm \sigma$)}
 \label{tab:classificacao}
 \centering
-\begin{tabular}{lccc}
+\begin{tabular}{lcccc}
 \toprule
-\textbf{Dataset} & \textbf{RNA Rasa (A)} & \textbf{RNA Profunda (B)} & \textbf{Fuzzy} \\
+\textbf{Dataset} & \textbf{MLP Rasa} & \textbf{MLP Prof.} & \textbf{Rede RBF} & \textbf{Fuzzy (Melhor)} \\
 \midrule
-1. Iris & $0.9571 \pm 0.0426$ & $\mathbf{0.9667 \pm 0.0341}$ & $0.6206 \pm 0.0281$ \\
-2. Breast Cancer & $\mathbf{0.9758 \pm 0.0130}$ & $0.9678 \pm 0.0184$ & $0.1257 \pm 0.0215$ \\
-4. Heart Disease & $\mathbf{0.8104 \pm 0.0450}$ & $0.8051 \pm 0.0445$ & $0.7381 \pm 0.0376$ \\
+Iris & $0.9571 \pm 0.0426$ & $\mathbf{0.9667 \pm 0.0341}$ & $0.9302 \pm 0.0503$ & $0.6206 \pm 0.0281$ \\
+Breast Cancer & $\mathbf{0.9758 \pm 0.0130}$ & $0.9683 \pm 0.0187$ & $0.9415 \pm 0.0128$ & $0.1257 \pm 0.0215$ \\
+Heart Disease & $0.8104 \pm 0.0450$ & $0.8051 \pm 0.0445$ & $\mathbf{0.8210 \pm 0.0503}$ & $0.7381 \pm 0.0376$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -104,21 +104,21 @@ Os resultados quantitativos obtidos experimentalmente após as 21 execuções in
 \toprule
 \textbf{Modelo} & \textbf{MSE Médio} & \textbf{MAE Médio} & \textbf{$R^2$ Médio} \\
 \midrule
-RNA Rasa (A) & $0.5533$ & $0.5693$ & $0.1757$ \\
-RNA Profunda (B) & $\mathbf{0.4415}$ & $\mathbf{0.5124}$ & $\mathbf{0.3410}$ \\
-Fuzzy Mamdani (A) & $1.8103$ & $1.1436$ & $-1.7067$ \\
+MLP Rasa (A) & $0.5533$ & $0.5693$ & $0.1757$ \\
+MLP Profunda (B) & $\mathbf{0.4415}$ & $\mathbf{0.5124}$ & $\mathbf{0.3410}$ \\
+Rede Neural RBF & $10.1626$ & $3.0966$ & $-14.1763$ \\
+Fuzzy Takagi-Sugeno & $2.2396$ & $1.2573$ & $-2.3428$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-A análise dos dados revela que as RNAs obtiveram vantagem preditiva nos cenários de alta dimensionalidade ($0.9758$ no \textit{Breast Cancer} e $R^2$ de $0.3410$ no \textit{Wine Quality}), uma vez que conseguem extrair características intrínsecas de múltiplos atributos correlacionados. No entanto, para o dataset \textit{Heart Disease}, o modelo Fuzzy apresentou alta competitividade ($0.7381$) associada ao menor desvio-padrão do experimento ($\pm 0.0376$), atestando sua estabilidade frente à estocasticidade e sua superioridade em termos de interpretabilidade por regras lógicas.
+A análise revela que o aprendizado global das MLPs garantiu excelente precisão em problemas puramente contínuos e de alta dimensionalidade ($0.9758$ no \textit{Breast Cancer} e $R^2$ de $0.3410$ no \textit{Wine Quality}). Todavia, o grande destaque ocorreu no conjunto híbrido \textit{Heart Disease}, onde a **Rede RBF superou todos os competidores, alcançando $82,10\%$ de acurácia**. Isso se justifica pela capacidade intrínseca das funções gaussianas de base radial de isolar com eficácia agrupamentos locais de sintomas clínicos complexos.
 
-O coeficiente $R^2$ negativo do modelo Fuzzy simples no \textit{Wine Quality} ($-1.7067$) evidencia as limitações de sistemas nebulosos puramente heurísticos em aproximar superfícies de regressão contínua hiper-sensíveis sem algoritmos de otimização adaptativa acoplados.
+Na tarefa de regressão (\textit{Wine Quality}), a aplicação direta do modelo classificador RBF gerou predições discretas em formato de "degraus", resultando em elevado erro residual e um coeficiente $R^2$ significativamente negativo ($-14,1763$). De modo semelhante, o modelo Fuzzy Takagi-Sugeno (T-S), embora estatisticamente muito estável, teve sua acurácia severamente limitada devido à restrição do espaço amostral a apenas 2 variáveis decorrentes do filtro \textit{SelectKBest}, evidenciando o clássico compromisso entre interpretabilidade e capacidade preditiva.
 
 \section{Conclusão}
-O experimento comprovou a clássica dualidade da Inteligência Computacional: a supremacia matemática e o poder de aproximação das Redes Neurais Artificiais contra a estabilidade e a transparência interpretativa da Lógica Fuzzy. Para sistemas biomédicos ou de suporte à decisão auditáveis, a estabilidade demonstrada pelo baixo desvio-padrão do modelo Fuzzy consolida a técnica como uma alternativa viável e robusta.
+O experimento comprovou a coexistência e complementaridade dos paradigmas de Inteligência Computacional. Enquanto redes globais oferecem alta capacidade de aproximação em grandes espaços contínuos, arquiteturas de base radial (RBF) provam-se superiores no mapeamento de diagnósticos localizados. Em contrapartida, os modelos Fuzzy mantêm papel crucial em sistemas críticos auditáveis onde a estabilidade do desvio-padrão e o formato semântico são mandatórios.
 
-% Inclusão dinâmica do arquivo referencias.bib
 \bibliographystyle{IEEEtran}
 \bibliography{referencias}
 

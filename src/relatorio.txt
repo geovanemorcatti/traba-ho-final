@@ -1,0 +1,160 @@
+============================================================
+>> PROCESSANDO DATASET: Iris
+============================================================
+
+--- MLP Rasa ---
+  Acurácia Médica:  0.9571 (Desvio: 0.0426)
+  Precisão Média:   0.9608
+  Revocação Média:  0.9571
+  F1-Score Médio:   0.9569
+  Matriz de Confusão Acumulada (Soma das 21 Rodadas):
+[[210   0   0]
+ [  0 197  13]
+ [  0  14 196]]
+
+--- MLP Profunda ---
+  Acurácia Médica:  0.9667 (Desvio: 0.0341)
+  Precisão Média:   0.9703
+  Revocação Média:  0.9667
+  F1-Score Médio:   0.9665
+  Matriz de Confusão Acumulada (Soma das 21 Rodadas):
+[[210   0   0]
+ [  0 202   8]
+ [  0  13 197]]
+
+--- Rede Neural RBF ---
+  Acurácia Médica:  0.9127 (Desvio: 0.0558)
+  Precisão Média:   0.9233
+  Revocação Média:  0.9127
+  F1-Score Médio:   0.9112
+  Matriz de Confusão Acumulada (Soma das 21 Rodadas):
+[[210   0   0]
+ [  0 191  19]
+ [  0  36 174]]
+
+--- Fuzzy Mamdani A (Triangular) ---
+  Acurácia Médica:  0.6206 (Desvio: 0.0281)
+  Precisão Média:   0.4484
+  Revocação Média:  0.6206
+  F1-Score Médio:   0.5127
+  Matriz de Confusão Acumulada (Soma das 21 Rodadas):
+[[210   0   0]
+ [ 29 181   0]
+ [  0 210   0]]
+
+--- Fuzzy Mamdani B (Gaussiana) ---
+  Acurácia Médica:  0.3349 (Desvio: 0.0071)
+  Precisão Média:   0.1587
+  Revocação Média:  0.3349
+  F1-Score Médio:   0.2150
+  Matriz de Confusão Acumulada (Soma das 21 Rodadas):
+[[210   0   0]
+ [209   1   0]
+ [ 28 182   0]]
+
+============================================================
+>> PROCESSANDO DATASET: Breast_Cancer
+============================================================
+
+--- MLP Rasa ---
+  Acurácia Médica:  0.9758 (Desvio: 0.0130)
+  Precisão Média:   0.9758
+  Revocação Média:  0.9727
+  F1-Score Médio:   0.9739
+  Matriz de Confusão Acumulada (Soma das 21 Rodadas):
+[[ 855   35]
+ [  23 1481]]
+
+--- MLP Profunda ---
+  Acurácia Médica:  0.9683 (Desvio: 0.0187)
+  Precisão Média:   0.9677
+  Revocação Média:  0.9650
+  F1-Score Médio:   0.9659
+  Matriz de Confusão Acumulada (Soma das 21 Rodadas):
+[[ 848   42]
+ [  34 1470]]
+
+--- Rede Neural RBF ---
+  Acurácia Médica:  0.9465 (Desvio: 0.0181)
+  Precisão Média:   0.9483
+  Revocação Média:  0.9379
+  F1-Score Médio:   0.9421
+  Matriz de Confusão Acumulada (Soma das 21 Rodadas):
+[[ 805   85]
+ [  43 1461]]
+
+--- Fuzzy Mamdani A (Triangular) ---
+  Acurácia Médica:  0.1157 (Desvio: 0.0252)
+  Precisão Média:   0.1205
+  Revocação Média:  0.0967
+  F1-Score Médio:   0.1063
+  Matriz de Confusão Acumulada (Soma das 21 Rodadas):
+[[  20  870]
+ [1247  257]]
+
+--- Fuzzy Mamdani B (Gaussiana) ---
+  Acurácia Médica:  0.1257 (Desvio: 0.0215)
+  Precisão Média:   0.0853
+  Revocação Média:  0.1682
+  F1-Score Médio:   0.1120
+  Matriz de Confusão Acumulada (Soma das 21 Rodadas):
+[[ 297  593]
+ [1500    4]]
+(.venv) PS C:\Users\geova\Documents\mestrado\trabaçho final> 
+
+//_________________________________________
+
+
+(.venv) PS C:\Users\geova\Documents\mestrado\trabaçho final> & "c:\Users\geova\Documents\mestrado\trabaçho final\.venv\Scripts\python.exe" "c:/Users/geova/Documents/mestrado/trabaçho final/src/experimentos_finais.py"
+--- Baixando Datasets Diretamente da UCI Machine Learning Repository ---
+
+====================================================
+👉 INICIANDO EXPERIMENTO 3: WINE QUALITY (REGRESSÃO)
+====================================================
+MLP Rasa       -> MSE: 0.5533 | MAE: 0.5693 | R²: 0.1757
+MLP Profunda   -> MSE: 0.4415 | MAE: 0.5124 | R²: 0.3410
+Rede RBF       -> MSE: 10.1342 | MAE: 3.0923 | R²: -14.1357
+Fuzzy T-S      -> MSE: 2.2396 | MAE: 1.2573 | R²: -2.3428
+
+====================================================
+👉 INICIANDO EXPERIMENTO 4: HEART DISEASE (CLASSIFICAÇÃO)
+====================================================
+
+--- MLP Rasa ---
+  Acurácia Média: 0.8104 (Desvio: 0.0450)
+  Precisão Média:  0.8146
+  Revocação Média: 0.8054
+  F1-Score Médio:  0.8059
+  Matriz de Confusão Acumulada:
+[[536  94]
+ [121 383]]
+
+--- MLP Profunda ---
+  Acurácia Média: 0.8051 (Desvio: 0.0445)
+  Precisão Média:  0.8099
+  Revocação Média: 0.8018
+  F1-Score Médio:  0.8013
+  Matriz de Confusão Acumulada:
+[[524 106]
+ [115 389]]
+
+--- Rede Neural RBF ---
+  Acurácia Média: 0.8201 (Desvio: 0.0451)
+  Precisão Média:  0.8254
+  Revocação Média: 0.8135
+  F1-Score Médio:  0.8149
+  Matriz de Confusão Acumulada:
+[[550  80]
+ [124 380]]
+
+--- Fuzzy Mamdani ---
+  Acurácia Média: 0.7381 (Desvio: 0.0376)
+  Precisão Média:  0.7628
+  Revocação Média: 0.7522
+  F1-Score Médio:  0.7368
+  Matriz de Confusão Acumulada:
+[[394 236]
+ [ 61 443]]
+
+--- Experimentos Concluídos com Sucesso! ---
+(.venv) PS C:\Users\geova\Documents\mestrado\trabaçho final> 
